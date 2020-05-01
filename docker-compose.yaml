@@ -1,0 +1,20 @@
+version: '3.7'
+
+networks:
+  app_net:
+    driver: bridge
+
+services:
+  mongodb:
+    image: 'mongo:latest'
+    networks:
+      - app_net
+  onetimesecret:
+    build: ./onetimesecret
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 80
+    networks:
+      - app_net
+    ports:
+      - 80:80
+    environment:
+      MONGO_DB_ADDR: mongodb
