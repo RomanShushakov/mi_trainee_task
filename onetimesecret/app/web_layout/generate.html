@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Saved secret</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a#generate').bind('click', function () {
+        $.getJSON('/generate/', {
+          secret: $('textarea[name="secret"]').val(),
+          passphrase: $('input[name="passphrase"]').val(),
+          lifetime: $('input[name="lifetime"]').val(),
+        }, function (data) {
+          $("#secret_key").text(data.secret_key);
+          $("#msg").text(data.msg);
+        });
+        return false;
+      });
+    });
+  </script>
+  <div class="secret_link_container">
+    <h3>Paste a password, secret message or private link below.</h3>
+    <form>
+      <p>
+      <div class="ui form">
+        <div class="field">
+          <label>Secret</label>
+          <textarea name="secret" placeholder="Secret content goes here..."></textarea>
+        </div>
+      </div>
+      </p>
+      <p>
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field">
+            <label>Passphrase</label>
+            <input type="text" name="passphrase" placeholder="A word or phrase that's difficult to guess...">
+          </div>
+        </div>
+      </div>
+      </p>
+      <p>
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field">
+            <label>Lifetime </label>
+            <input type="text" name="lifetime" placeholder="Life time of your message in seconds...">
+          </div>
+        </div>
+      </div>
+      </p>
+      <p>
+        <a href="#" id="generate"><button class="ui button">Generate secret link</button></a>
+      </p>
+    </form>
+    <p>
+    <p id="secret_key"></p>
+    <p id="msg"></p>
+    </p>
+
+  </div>
+</body>
+
+</html>

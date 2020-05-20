@@ -25,6 +25,9 @@ class MongodbService(object):
         self._db.secrets.create_index([('expired_at', ASCENDING)], expireAfterSeconds=0)
 
     def get_data(self, secret_key):
+        return self._db.secrets.find_one({'secret_key': secret_key})
+
+    def get_and_delete_data(self, secret_key):
         return self._db.secrets.find_one_and_delete({'secret_key': secret_key})
 
     def save_data(self, secret):

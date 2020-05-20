@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Received secret</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('a#receive').bind('click', function () {
+        $.getJSON('/receive/', {
+          passphrase: $('input[name="passphrase"]').val(),
+          secret_key: $(location).attr("href")
+        }, function (data) {
+          $("#secret").text(data.secret);
+          $("#msg").text(data.msg);
+        });
+        return false;
+      });
+    });
+  </script>
+  <div class="secret_link_container">
+    <h3>This message requires a passphrase:</h3>
+    <form>
+      <p>
+      <div class="ui form">
+        <div class="inline fields">
+          <div class="four wide field">
+            <label>Passphrase</label>
+            <input type="text" name="passphrase" placeholder="Enter the passphrase here...">
+          </div>
+        </div>
+      </div>
+      </p>
+      <p>
+        <a href="#" id="receive"><button class="ui button">Receive secret</button></a>
+      </p>
+    </form>
+    <p>
+    <p id="secret"></p>
+    <p id="msg"></p>
+    </p>
+  </div>
+</body>
+
+</html>
